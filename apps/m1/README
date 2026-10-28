@@ -1,0 +1,11 @@
+PROGRAMMING STYLES, PROJECT MILESTONE 1 (INTRO TO BEAUTIFULSOUP)
+
+HOW TO RUN:
+Unzip the files and run each task individually using command line:
+python <task.py> <input.html>
+(Every task needs an input .html file to run)
+Tasks 1, 6, 7 write to an output file called "prettified.py" (to not mess with the input file)
+
+Performance on large files (encoded to bin to save CPU overhead):
+Stress tested using a 100 MB file, html.parser took forever, lxml took ~20 seconds.
+Tested using a 1 GB file, lxml took ~400 seconds and filled up the memory.

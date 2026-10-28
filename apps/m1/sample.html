@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample HTML Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .test-box {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Main Heading (H1)</h1>
+        <p>This is a standard paragraph element used to verify text rendering, line-heights, and base font configurations.</p>
+    </header>
+
+    <hr>
+
+    <main>
+        <!-- Text Layout and Headings Section -->
+        <section id="typography">
+            <h2>Typography Styles (H2)</h2>
+            <h3>Sub-heading level 3 (H3)</h3>
+            <p>You can test text modifiers like <strong>bold text</strong>, <em>italicized text</em>, <mark>highlighted text</mark>, and <code>inline code blocks</code>.</p>
+	    <b>You can test text modifiers like <strong>bold text</strong>, <em>italicized text</em>, <mark>highlighted text</mark>, and <code>inline code blocks</code>.</b>
+            
+            <div class="test-box">
+                <p><strong>Class Test Box:</strong> If CSS is loading correctly, this box will have a blue left border and a light blue background layout.</p>
+            </div>
+        </section>
+
+        <!-- Lists Section -->
+        <section id="lists">
+            <h2>Lists and Structure</h2>
+            <ul>
+                <li>Unordered list item one</li>
+                <li>Unordered list item two with an <a href="https://example.com" target="_blank">external link</a></li>
+		<li>Second Unordered list item two with an <a href="https://example.com" target="_blank">external link</a></li>
+            </ul>
+            <ol>
+                <li>Ordered step number one</li>
+                <li>Ordered step number two</li>
+            </ol>
+        </section>
+
+        <!-- Forms Section -->
+        <section id="forms">
+            <h2>Interactive Form Elements</h2>
+            <form onsubmit="alert('Form submitted!'); return false;">
+                <div style="margin-bottom: 15px;">
+                    <label for="username">Text Input:</label><br>
+                    <input type="text" id="username" name="username" placeholder="Enter text here..." required>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="choices">Dropdown Selector:</label><br>
+                    <select id="choices" name="choices">
+                        <option value="opt1">Option One</option>
+                        <option value="opt2">Option Two</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <input type="checkbox" id="confirm" name="confirm">
+                    <label for="confirm">Check token verification box</label>
+                </div>
+
+                <button type="submit">Submit Form Test Button</button>
+            </form>
+        </section>
+
+        <!-- Data Tables Section -->
+        <section id="tables">
+            <h2>Tabular Data Display</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Component Profile</th>
+                        <th>Status Flags</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>Main Framework Router</td>
+                        <td><span style="color: green;">✔ Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>002</td>
+                        <td>Secondary Sandbox Node</td>
+                        <td><span style="color: red;">✘ Offline</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Media Placeholder Section -->
+        <section id="media">
+            <h2>Media Testing</h2>
+            <p>Below is a placeholder image verifying asset paths:</p>
+            <img src="https://placeholder.com" alt="Placeholder Image Asset" style="max-width: 100%; height: auto;">
+        </section>
+    </main>
+
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+        <p><small>&copy; 2026 Local Host Script Test Environment</small></p>
+    </footer>
+
+    <script>
+        console.log("DOM Test Notification: The embedded JavaScript executed successfully.");
+    </script>
+</body>
+</html>
