@@ -1037,12 +1037,6 @@ class BeautifulSoup(Tag):
         # the user brought type-unsafety upon themselves.
         tag_class = cast(Type[Tag], tag_class)
 
-        if (
-            self.replacer and self.replacer.og_tag and self.replacer.alt_tag 
-            and self.replacer.og_tag == name
-        ):
-            name = self.replacer.alt_tag
-        
         tag = tag_class(
             self,
             self.builder,
@@ -1056,6 +1050,10 @@ class BeautifulSoup(Tag):
             sourcepos=sourcepos,
             namespaces=namespaces,
         )
+
+        if self.replacer:
+            tag = self.replacer.transform(tag)
+
         if tag is None:
             return tag
         if self._most_recent_element is not None:
@@ -1074,12 +1072,8 @@ class BeautifulSoup(Tag):
         """
         # print("End tag: " + name)
         self.endData()
-
-        if (
-            self.replacer and self.replacer.og_tag and self.replacer.alt_tag 
-            and self.replacer.og_tag == name
-        ):
-            name = self.replacer.alt_tag
+        if self.replacer:
+            name = self.replacer.transform(Tag(self, self.builder, name)).name
         self._popToTag(name, nsprefix)
 
     def handle_data(self, data: str) -> None:
