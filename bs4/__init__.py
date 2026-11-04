@@ -181,7 +181,7 @@ class BeautifulSoup(Tag):
     is_xml: bool
     known_xml: Optional[bool]
     parse_only: Optional[SoupStrainer]  #: :meta private:
-    replacer: Optional[SoupReplacer]
+    replacer: Optional[SoupReplacer]  #: :meta private:  
 
     # These members are only used while parsing markup.
     markup: Optional[_RawMarkup]  #: :meta private:
@@ -1052,7 +1052,14 @@ class BeautifulSoup(Tag):
         )
 
         if self.replacer:
-            tag = self.replacer.transform(tag)
+            if self.replacer.og_tag and self.replacer.alt_tag and self.replacer.og_tag == tag.name:
+                tag.name = self.replacer.alt_tag
+            if self.replacer.name_xformer:
+                tag.name = self.replacer.name_xformer(tag)
+            if self.replacer.attrs_xformer:
+                tag.attrs = self.replacer.attrs_xformer(tag)
+            if self.replacer.xformer:
+                self.replacer.xformer(tag)
 
         if tag is None:
             return tag
@@ -1073,7 +1080,10 @@ class BeautifulSoup(Tag):
         # print("End tag: " + name)
         self.endData()
         if self.replacer:
-            name = self.replacer.transform(Tag(self, self.builder, name)).name
+            if self.replacer.og_tag and self.replacer.alt_tag and self.replacer.og_tag == name:
+                name = self.replacer.alt_tag
+            if self.replacer.name_xformer:
+                name = self.replacer.name_xformer(Tag(None, None, name))
         self._popToTag(name, nsprefix)
 
     def handle_data(self, data: str) -> None:
