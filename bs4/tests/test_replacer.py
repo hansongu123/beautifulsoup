@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Tests of Beautiful Soup as a whole."""
+"""Tests of SoupReplacer."""
 
 from bs4 import BeautifulSoup
-
 from bs4.SoupReplacer import SoupReplacer
 
 class TestSoupReplacer():
@@ -106,4 +105,32 @@ class TestSoupReplacer():
         sr = SoupReplacer(xformer=b_to_d)
         soup = BeautifulSoup(markup, "html.parser", replacer=sr)
         expected = BeautifulSoup("No<d>Yes</d>No<d>Yes <c>Yes</c></d>", "html.parser")
-        assert soup.decode_contents() == expected.decode_contents()     
+        assert soup.decode_contents() == expected.decode_contents()
+
+    def test_name_mismatched_tags(self):
+        markup = "<b><i>text</b></i>"
+        b_to_a = SoupReplacer(name_xformer=lambda tag: "a" if tag.name=="b" else tag.name)
+        soup = BeautifulSoup(markup, "html.parser", replacer=b_to_a)
+        expected = BeautifulSoup("<a><i>text</a></i>", "html.parser")
+        assert soup.decode_contents() == expected.decode_contents()
+
+    def test_name_stray_tags(self):
+        markup = "<p>hello</span> world</p>"
+        p_to_blockquote = SoupReplacer(name_xformer=lambda tag: "blockquote" if tag.name=="p" else tag.name)
+        soup = BeautifulSoup(markup, "html.parser", replacer=p_to_blockquote)
+        expected = BeautifulSoup("<blockquote>hello</span> world</blockquote>", "html.parser")
+        assert soup.decode_contents() == expected.decode_contents()
+
+        # test replace same name as stray tag
+        p_to_span = SoupReplacer(name_xformer=lambda tag: "span" if tag.name=="p" else tag.name)
+        soup = BeautifulSoup(markup, "html.parser", replacer=p_to_span)
+        expected = BeautifulSoup("<span>hello</span> world</span>", "html.parser")
+        assert soup.decode_contents() == expected.decode_contents()
+
+    def test_lxml_stray_and_mismatched(self):
+        # lxml parser behaves differently than html_parser, it repairs the document rather than report what it sees
+        markup = "<div class='x'><b>one<i>two</b>three</i><p>four</span><b>five</b></p></div></p>six"
+        b_to_a = SoupReplacer(name_xformer=lambda tag: "a" if tag.name=="b" else tag.name)
+        soup = BeautifulSoup(markup, "lxml", replacer=b_to_a)
+        expected = BeautifulSoup("<div class='x'><a>one<i>two</i></a>three<p>four<a>five</a></p></div>six", "lxml")
+        assert soup.decode_contents() == expected.decode_contents()

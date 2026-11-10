@@ -1052,7 +1052,7 @@ class BeautifulSoup(Tag):
         )
 
         if self.replacer:
-            tag = self.replacer.transform(tag)
+            self.replacer.on_start(tag, name, nsprefix)
 
         if tag is None:
             return tag
@@ -1070,10 +1070,12 @@ class BeautifulSoup(Tag):
 
         :meta private:
         """
+
+        if self.replacer:
+            name = self.replacer.on_end(name, nsprefix)
+
         # print("End tag: " + name)
         self.endData()
-        if self.replacer:
-            name = self.replacer.transform(Tag(self, self.builder, name)).name
         self._popToTag(name, nsprefix)
 
     def handle_data(self, data: str) -> None:
