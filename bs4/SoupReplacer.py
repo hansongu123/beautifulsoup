@@ -32,5 +32,3 @@ class SoupReplacer:
                 del self._open[i:]
                 break
         return name
-
-        

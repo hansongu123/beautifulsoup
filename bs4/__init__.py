@@ -181,7 +181,7 @@ class BeautifulSoup(Tag):
     is_xml: bool
     known_xml: Optional[bool]
     parse_only: Optional[SoupStrainer]  #: :meta private:
-    replacer: Optional[SoupReplacer]
+    replacer: Optional[SoupReplacer]  #: :meta private:  
 
     # These members are only used while parsing markup.
     markup: Optional[_RawMarkup]  #: :meta private:
