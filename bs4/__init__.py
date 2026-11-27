@@ -496,6 +496,28 @@ class BeautifulSoup(Tag):
         self.markup = None
         self.builder.soup = None
 
+    def _walk(self):
+        """ Private helper for the iterator of BeautifulSoup object that yields 
+        every element in the object's contents
+        """
+        if not self.contents:
+            return
+        current = self.contents[0]
+        while (current is not None):
+            following = current.next_element
+            yield current
+            current = following
+
+
+    def __iter__(self):
+        """ Iterator of a BeautifulSoup object that filters out non-Tag
+        objects and only yields Tags and Inline text
+        """
+        for node in self._walk():
+            if isinstance(node, Tag):
+                yield node
+
+
     def copy_self(self) -> "BeautifulSoup":
         """Create a new BeautifulSoup object with the same TreeBuilder,
         but not associated with any markup.
